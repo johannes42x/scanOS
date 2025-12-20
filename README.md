@@ -2,8 +2,7 @@
 A template-driven ingestion and normalization method for converting arbitrary
 human-facing inputs into deterministic, machine-readable structured data.
 
-Version: 1.0  
-Status: Stable Draft  
+Version: 0.9.0
 
 ---
 
@@ -46,47 +45,6 @@ specific tools used to perform it.
 
 ---
 
-## Method Specification
-The full technical description of the scanOS method is available in:
-
-→ [`scanOS_SPECIFICATION_v1.md`](scanOS_SPECIFICATION_v1.md)
-
-This document defines:
-- inputs  
-- processing pipeline  
-- template system  
-- normalization rules  
-- error model  
-- implementation neutrality  
-
----
-
-## License
-scanOS is free for **individual, non-commercial use**.
-
-Corporate, institutional, or governmental use requires a **commercial license**.
-
-The full licensing terms are defined in:
-
-→ [`scanOS_RESTRICTED_LICENSE_v1.0.md`](scanOS_RESTRICTED_LICENSE_v1.0.md)
-
-The license also defines:
-- derivative works  
-- restrictions on commercial use  
-- prohibitions  
-- warranty disclaimer  
-
----
-
-## Prior Art
-The method, structure, and conceptual origins of scanOS are documented in:
-
-→ [`scanOS_PRIOR_ART.md`](scanOS_PRIOR_ART.md)
-
-This establishes authorship, chronology, and prevents patent capture.
-
----
-
 ## Implementation Neutrality
 scanOS may be implemented:
 
@@ -109,7 +67,8 @@ Templates may version independently.
 ---
 
 ## Contact
-For licensing inquiries or questions regarding commercial use, please contact:
+For licensing inquiries, please contact:
+lizenz@metamemoryworks.de / licensing@metamemoryworks.com
 
-**Johannes Glaser**  
-(Author and Copyright Holder)
+For everything else:
+kontakt@metamemoryworks.de / contact@metamemoryworks.com
