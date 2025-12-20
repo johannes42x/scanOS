@@ -1,0 +1,5 @@
+{
+  "schema": "scanOS_templates_v1",
+  "beschreibung": "Zentrale, zunächst leere Sammlung für scanOS-Templates. Hier werden später die einzelnen Template-Blöcke für unterschiedliche Datenquellen (z. B. Ergometer, Schlaftracker, Rechnungen, Zotero) abgelegt.",
+  "templates": []
+}

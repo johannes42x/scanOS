@@ -1,0 +1,182 @@
+{
+  "id": "ID-###",
+  "preset_id": "tpl_image_description_safety_v2_de",
+  "schema": "scanOS_template_v1",
+  "name": "Bildbeschreibung (Safety-First, nicht-textdominant, mit menschenlesbarer Zusammenfassung)",
+  "beschreibung": "Greift bei Foto-Uploads, die nicht vorwiegend aus Text bestehen. Führt zuerst einen Safety-Check aus (Gefahr/Handlungsbedarf), danach eine rein beschreibende Bildbeschreibung. Zusätzlich wird eine zusammenhängende, menschenlesbare Beschreibung erzeugt. Interpretation und Bewertung nur auf ausdrückliche Anfrage.",
+  "sprache": "de",
+  "quelle": {
+    "typ": "foto",
+    "eingang": "image_upload"
+  },
+  "trigger": {
+    "bedingungen": [
+      {
+        "typ": "content_gate",
+        "wenn": "image_is_text_dominant == false",
+        "sonst": "route_to_text_ocr_workflow"
+      }
+    ]
+  },
+  "arbeitsmodus": {
+    "default": "beschreibend",
+    "interpretation": "nur_wenn_user_explizit_bittet",
+    "bewertung": "nur_wenn_user_explizit_bittet"
+  },
+  "pipeline": [
+    {
+      "step": "safety_layer_0",
+      "ziel": "Prüfung auf unmittelbare Gefahr oder impliziten Handlungsbedarf vor jeder Bildbeschreibung.",
+      "checks": {
+        "unmittelbare_gefahr": [
+          "Verkehrs- oder Schienensituation",
+          "Feuer, Rauch, Explosion",
+          "Waffen oder aktive Gewalt",
+          "Elektrische Gefahren",
+          "Absturz- oder Einsturzgefahr",
+          "Chemische Gefahren",
+          "Aggressive Tiere"
+        ],
+        "handlungsbedarf": [
+          "medizinischer Notfall",
+          "Sachschaden oder Leck",
+          "Alarme oder Warnanzeigen",
+          "Gefährdung Dritter",
+          "sichtbare sensible Daten"
+        ]
+      }
+    },
+    {
+      "step": "beschreibung",
+      "regeln": [
+        "Nur Sichtbares beschreiben",
+        "Vom Allgemeinen zum Spezifischen",
+        "Keine Deutung oder Bewertung ohne explizite Nutzeranfrage",
+        "Zusätzlich eine zusammenhängende, menschenlesbare Beschreibung aus den Layern erzeugen"
+      ],
+      "human_readable_summary": {
+        "ziel": "Fließtext für Menschen",
+        "quelle": [
+          "layer_1_global",
+          "layer_2_objekte",
+          "layer_4_relationen"
+        ],
+        "stil": {
+          "form": "zusammenhängender Absatz",
+          "sprache": "neutral, sachlich",
+          "reihenfolge": [
+            "Gesamtszene",
+            "zentrale Objekte",
+            "sichtbare Handlungen oder Relationen",
+            "auffällige Details"
+          ],
+          "verboten": [
+            "Interpretationen",
+            "Motive",
+            "Emotionen",
+            "Ursachenannahmen"
+          ]
+        }
+      },
+      "layers": {
+        "layer_0_metadaten": [
+          "bildtyp",
+          "perspektive",
+          "qualitaet",
+          "licht",
+          "farbmodus"
+        ],
+        "layer_1_global": [
+          "szene_grob",
+          "anordnung"
+        ],
+        "layer_2_objekte": [
+          {
+            "typ": "person|tier|gegenstand|textblock|symbol|fahrzeug|natur|sonstiges",
+            "anzahl": null,
+            "position": null,
+            "groesse_relativ": null,
+            "merkmale": [],
+            "zustand": null
+          }
+        ],
+        "layer_3_text": [
+          "enthaelt_text",
+          "lesbarkeit",
+          "wortlaut_fragmente"
+        ],
+        "layer_4_relationen": [
+          "relationen",
+          "handlungen_eindeutig"
+        ]
+      }
+    }
+  ],
+  "ausgabe": {
+    "format": "json",
+    "struktur": {
+      "safety": {
+        "status": "ok|hinweis|warnung",
+        "kategorie": null,
+        "beschreibung": null,
+        "empfehlung": null
+      },
+      "bildbeschreibung": {
+        "menschenlesbar": {
+          "beschreibung": null,
+          "hinweis": "Automatisch erzeugte, zusammenhängende Beschreibung auf Basis der strukturierten Layer. Rein beschreibend."
+        },
+        "layer_0": {},
+        "layer_1": {},
+        "layer_2": {
+          "objekte": []
+        },
+        "layer_3": {},
+        "layer_4": {}
+      },
+      "optional": {
+        "interpretation": null,
+        "bewertung": null
+      }
+    },
+    "chat": {
+      "nach_json_inlinedump": [
+        {
+          "typ": "plaintext",
+          "quelle": "bildbeschreibung.menschenlesbar.beschreibung",
+          "format": {
+            "titel": "Menschenlesbare Bildbeschreibung",
+            "stil": "normaler Chattext (kein JSON)"
+          },
+          "fallback": "Wenn menschenlesbar.beschreibung leer oder null ist, nichts zusätzlich ausgeben."
+        }
+      ],
+      "reihenfolge": [
+        "json_inlinedump",
+        "plaintext_menschenlesbar"
+      ],
+      "hinweis": "Primärausgabe bleibt JSON. Zusätzlich wird nach dem JSON die menschenlesbare Beschreibung als normaler Chattext ausgegeben.",
+      "erzwinge_json_inlinedump": true,
+      "keine_einleitung_vor_json": true,
+      "json_muss_ausgabe_struktur_matchen": true
+    },
+    "response_contract": {
+      "muss": [
+        "Die Antwort MUSS mit einem reinen JSON-Inlinedump beginnen, der exakt der Struktur unter ausgabe.struktur entspricht.",
+        "Vor dem JSON darf kein Fließtext stehen (keine Einleitung, keine Überschrift).",
+        "Nach dem JSON folgt optional (wenn vorhanden) die menschenlesbare Bildbeschreibung als normaler Chattext.",
+        "Interpretation/Bewertung nur, wenn der Nutzer explizit darum bittet."
+      ],
+      "reihenfolge": [
+        "json_inlinedump",
+        "plaintext_menschenlesbar"
+      ],
+      "formatierungsregeln": {
+        "json": "ohne Markdown-Umrandung bevorzugt; falls nötig als ```json ... ```",
+        "plaintext": "Überschrift erlaubt, aber kurz; dann Fließtext"
+      }
+    }
+  },
+  "version": "v2.2",
+  "erstellt_am": "2025-12-15"
+}
