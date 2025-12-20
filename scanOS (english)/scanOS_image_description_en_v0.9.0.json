@@ -1,0 +1,182 @@
+{
+  "id": "ID-###",
+  "preset_id": "tpl_image_description_safety_v2_en",
+  "schema": "scanOS_template_v1",
+  "name": "Image Description (Safety-First, non-text-dominant, with human-readable summary)",
+  "description": "Triggers on photo uploads that are not predominantly text. Performs a safety check first (danger/action required), followed by a strictly descriptive image analysis. Additionally generates a coherent, human-readable description. Interpretation and evaluation only upon explicit request.",
+  "language": "en",
+  "source": {
+    "type": "photo",
+    "input": "image_upload"
+  },
+  "trigger": {
+    "conditions": [
+      {
+        "type": "content_gate",
+        "if": "image_is_text_dominant == false",
+        "else": "route_to_text_ocr_workflow"
+      }
+    ]
+  },
+  "operation_mode": {
+    "default": "descriptive",
+    "interpretation": "only_if_user_explicitly_requests",
+    "evaluation": "only_if_user_explicitly_requests"
+  },
+  "pipeline": [
+    {
+      "step": "safety_layer_0",
+      "goal": "Check for immediate danger or implied need for action before any image description.",
+      "checks": {
+        "immediate_danger": [
+          "Traffic or railway situation",
+          "Fire, smoke, explosion",
+          "Weapons or active violence",
+          "Electrical hazards",
+          "Fall or collapse risk",
+          "Chemical hazards",
+          "Aggressive animals"
+        ],
+        "action_required": [
+          "Medical emergency",
+          "Property damage or leak",
+          "Alarms or warning indicators",
+          "Endangerment of others",
+          "Visible sensitive data"
+        ]
+      }
+    },
+    {
+      "step": "description",
+      "rules": [
+        "Describe only what is visible",
+        "From general to specific",
+        "No interpretation or evaluation without explicit user request",
+        "Additionally generate a coherent, human-readable description from the layers"
+      ],
+      "human_readable_summary": {
+        "goal": "Plain text for humans",
+        "source": [
+          "layer_1_global",
+          "layer_2_objects",
+          "layer_4_relations"
+        ],
+        "style": {
+          "form": "coherent paragraph",
+          "language": "neutral, factual",
+          "order": [
+            "Overall scene",
+            "Central objects",
+            "Visible actions or relations",
+            "Notable details"
+          ],
+          "forbidden": [
+            "Interpretations",
+            "Motives",
+            "Emotions",
+            "Causal assumptions"
+          ]
+        }
+      },
+      "layers": {
+        "layer_0_metadata": [
+          "image_type",
+          "perspective",
+          "quality",
+          "lighting",
+          "color_mode"
+        ],
+        "layer_1_global": [
+          "scene_overview",
+          "layout"
+        ],
+        "layer_2_objects": [
+          {
+            "type": "person|animal|object|textblock|symbol|vehicle|nature|other",
+            "count": null,
+            "position": null,
+            "relative_size": null,
+            "features": [],
+            "state": null
+          }
+        ],
+        "layer_3_text": [
+          "contains_text",
+          "readability",
+          "text_fragments"
+        ],
+        "layer_4_relations": [
+          "relations",
+          "actions_clear"
+        ]
+      }
+    }
+  ],
+  "output": {
+    "format": "json",
+    "structure": {
+      "safety": {
+        "status": "ok|notice|warning",
+        "category": null,
+        "description": null,
+        "recommendation": null
+      },
+      "image_description": {
+        "human_readable": {
+          "description": null,
+          "note": "Automatically generated coherent description based on structured layers. Strictly descriptive."
+        },
+        "layer_0": {},
+        "layer_1": {},
+        "layer_2": {
+          "objects": []
+        },
+        "layer_3": {},
+        "layer_4": {}
+      },
+      "optional": {
+        "interpretation": null,
+        "evaluation": null
+      }
+    },
+    "chat": {
+      "after_json_inlinedump": [
+        {
+          "type": "plaintext",
+          "source": "image_description.human_readable.description",
+          "format": {
+            "title": "Human-readable image description",
+            "style": "normal chat text (non-JSON)"
+          },
+          "fallback": "If human_readable.description is empty or null, output nothing additional."
+        }
+      ],
+      "order": [
+        "json_inlinedump",
+        "plaintext_human_readable"
+      ],
+      "note": "Primary output remains JSON. Additionally, after the JSON, output the human-readable description as normal chat text.",
+      "force_json_inlinedump": true,
+      "no_intro_before_json": true,
+      "json_must_match_output_structure": true
+    },
+    "response_contract": {
+      "must": [
+        "The response MUST start with a pure JSON inline dump that exactly matches output.structure.",
+        "No prose is allowed before the JSON (no intro text, no heading).",
+        "After the JSON, optionally (if present) output the human-readable description as normal chat text.",
+        "Interpretation/evaluation only if the user explicitly requests it."
+      ],
+      "order": [
+        "json_inlinedump",
+        "plaintext_human_readable"
+      ],
+      "formatting_rules": {
+        "json": "prefer without Markdown; if needed, wrap as ```json ... ```",
+        "plaintext": "Heading allowed but brief; then coherent paragraph"
+      }
+    }
+  },
+  "version": "v2.2",
+  "created_at": "2025-12-15"
+}

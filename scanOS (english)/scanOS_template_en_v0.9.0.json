@@ -1,0 +1,5 @@
+{
+  "schema": "scanOS_templates_v1",
+  "description": "Central, initially empty collection for scanOS templates. Individual template blocks for different data sources (e.g., ergometer, sleep tracker, receipts, Zotero) will be added here.",
+  "templates": []
+}
