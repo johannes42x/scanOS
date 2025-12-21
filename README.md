@@ -1,4 +1,11 @@
 # scanOS
+
+This repository is part of **MetaMemoryWorks** —  
+a file-based architecture for persistent AI memory.
+
+🌐 http://metamemoryworks.com  
+📄 Architecture: https://github.com/johannes42x/MetaMemoryArchitecture
+
 A template-driven ingestion and normalization method for converting arbitrary
 human-facing inputs into deterministic, machine-readable structured data.
 
