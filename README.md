@@ -1,19 +1,10 @@
-# scanOS
+# nutritionOS
 
-scanOS defines how visible information becomes structured data that persists.
+nutritionOS defines how eating, cooking, and nutritional decisions become a **coherent, long-term process** rather than a sequence of isolated days.
 
-Screenshots, photos, scans, documents, and other human-facing artifacts contain
-information that is usually read once, summarized, and discarded.
-scanOS specifies a **repeatable ingestion and normalization method** that turns
-what is visible into deterministic, machine-readable files.
+Most nutrition tools focus on logging, scoring, and correcting. nutritionOS focuses on **continuity**: how food choices accumulate, stabilize, and make sense over time.
 
-scanOS is designed for situations where information must not only be recognized,
-but **retained, compared, and reused over time**.
-
----
-
-This repository is part of **MetaMemoryWorks** —  
-a file-based architecture for persistent AI memory.
+nutritionOS is part of **MetaMemoryWorks** — a file-based architecture for persistent AI memory.
 
 🌐 https://metamemoryworks.com  
 📄 Architecture: https://github.com/johannes42x/MetaMemoryArchitecture
@@ -22,117 +13,155 @@ Version: 0.9.0
 
 ---
 
-## What is scanOS?
+## What is nutritionOS?
 
-scanOS is a **method and product** for transforming screenshots, photos, scans,
-documents, or text fragments into structured representations using predefined
-templates and deterministic normalization rules.
+nutritionOS is a **nutrition and cooking system**, not a calorie app.
 
-It provides a consistent, predictable way to extract visible information and
-convert it into formats suitable for downstream processing, analytics, and
-automation workflows.
+It turns a language model into something that can:
 
-scanOS is **implementation-neutral**:
+- remember what you eat,
+- understand what you have at home,
+- and reason about food as part of everyday life.
 
-- it is not tied to any specific programming language  
-- not bound to a particular OCR engine  
-- not dependent on a specific runtime or AI model  
+You define goals if you want to — maintenance, deficit, surplus, protein focus, recovery — but nutritionOS does not reduce eating to targets alone. It works with preferences, constraints, habits, and phases. nutritionOS is grounded in **your actual pantry**. You enter what you really have, once. From there, recipes, meals, and suggestions are built from reality, not from idealized shopping lists.
 
-Any system that follows the scanOS method is considered a valid implementation.
+Over time, logs create context:
+- what worked,
+- what didn’t,
+- what felt easy,
+- what felt exhausting.
+
+The system does not reset every morning. It remembers.
 
 ---
 
-## What problem scanOS addresses
+## What problem nutritionOS addresses
 
-Most visual ingestion tools focus on *recognition*:
-you upload an image, receive text or annotations, and move on.
+Most nutrition apps are episodic.
 
-scanOS focuses on **stability**:
+- You log a day.
+- You see numbers.
+- You miss a target.
+- You compensate.
+- You start again.
 
-- repeated inputs of the same type produce comparable outputs  
-- structure is explicit, inspectable, and file-based  
-- outputs are designed to persist, not disappear in chats or UIs  
+This produces discipline — and often fatigue.
 
-scanOS is intended as an ingestion layer wherever visual information must become
-part of a longer-lived data flow or memory system.
+nutritionOS treats nutrition as a **continuous process**. A bad day is not a failure. It is part of the curve. Instead of judging food, nutritionOS **organizes it**:
+
+- across days,
+- across weeks,
+- across changing goals.
+
+What emerges is not control, but orientation.
 
 ---
 
 ## Core characteristics
 
-- Template-driven ingestion  
-- Deterministic normalization rules  
-- Explicit handling of uncertainty and ambiguity  
-- Structured outputs (JSON, YAML, XML, CSV, etc.)  
-- Compatible with batch, real-time, and interactive workflows  
-- Designed for pipeline integration with any downstream system  
-  (including MetaMemoryWorks modules such as trainingOS, nutritionOS, sleepOS)
+- Pantry-based reasoning (work with what is actually there)
+- Recipe systems instead of one-off meal ideas
+- Persistent logs that create context, not pressure
+- Transparent calculations that remain inspectable
+- No gamification, streaks, or moral scoring of food
+- Designed to evolve with training, stress, and everyday life
+
+nutritionOS does not try to motivate you.
+It tries to stay coherent.
 
 ---
 
-## What scanOS is **not**
+## What nutritionOS is **not**
 
-scanOS intentionally does **not** claim properties it cannot guarantee:
+nutritionOS deliberately avoids claims it cannot guarantee:
 
-- Not an OCR model  
-- Not hallucination-proof  
-- Not a prediction or reasoning engine  
-- Not guaranteed to extract data perfectly  
-- Not tied to a single implementation or technology stack  
+- Not a medical or therapeutic system
+- Not a replacement for professional nutritional advice
+- Not an enforcement or discipline tool
 
-scanOS defines **how ingestion and normalization must be performed**,  
-not which tools must be used to perform them.
+nutritionOS provides **structure and memory**. Decisions remain yours.
 
 ---
 
-## Implementation neutrality
+## How nutritionOS works in practice
 
-scanOS may be implemented:
+nutritionOS operates across three layers:
 
-- in any programming language  
-- with any OCR backend  
-- with or without language models  
-- on local or cloud systems  
-- as CLI tools, APIs, services, or embedded components  
+**Pantry**  
+Your ingredients are the base reality. Everything else derives from this.
 
-Changing format, medium, or execution environment does not remove a system from
-being considered a scanOS implementation, as long as the method is followed.
+**Recipes**  
+Recipes are reusable structures that can be scaled, adjusted, and refined.
+They are not inspiration fragments, but building blocks.
+
+**Logs**  
+Logs create continuity. Not to judge, but to reveal patterns over time.
+
+This allows you to:
+- build meals from what you already have
+- scale food to daily needs without micromanagement
+- understand satiety, energy, and habits longitudinally
+- derive shopping needs from actual usage, not guesses
+
+nutritionOS does not tell you what to eat.
+It keeps the system intelligible while you live your life.
 
 ---
 
 ## Relation to MetaMemoryWorks
 
-scanOS can be used standalone.
+nutritionOS can be used standalone.
 
-Within MetaMemoryWorks, it typically serves as:
+Within MetaMemoryWorks, it typically functions as:
+- a persistent memory layer for nutrition and cooking
+- a bridge between daily decisions and long-term patterns
+- an upstream component for trainingOS, sleepOS, and related modules
 
-- the ingestion layer for visually sourced information  
-- a normalization bridge between human-facing artifacts and file-based memory  
-- an upstream component for modules such as trainingOS, nutritionOS, sleepOS  
+nutritionOS does not require MetaMemoryWorks,
+but integrates cleanly with it.
 
-scanOS does not require the MetaMemoryWorks stack, but integrates cleanly with it.
+---
+
+## Installation & usage
+
+nutritionOS is distributed as a file package.
+
+There is nothing to install and nothing to configure.
+You upload the files into your LLM environment and begin.
+
+Typical workflow:
+1. Download and unzip nutritionOS
+2. Upload all files into a new project
+3. Follow the Start Guide
+4. Enter your pantry (or adapt a preset)
+5. Begin logging and cooking
+
+Primarily tested with **ChatGPT Projects**.
+Other LLMs should work as long as file context is supported.
 
 ---
 
 ## Versioning
 
-scanOS uses semantic versioning for the specification.
+nutritionOS follows semantic versioning.
 
-Templates, rulesets, and presets may version independently.
+Presets, pantries, and expansions may version independently.
 
 ---
 
 ## Licensing
 
-- Private, non-commercial use: free  
-- Commercial or institutional use: license required  
+- Private, non-commercial use: free
+- Commercial or institutional use: license required
 
-See the license files in `/legal/` for details.
+See `/legal/` for details.
 
-For licensing inquiries:
-lizenz@metamemoryworks.de  
+For licensing:
 licensing@metamemoryworks.com
 
-For everything else:
-kontakt@metamemoryworks.de  
+For general contact:
 contact@metamemoryworks.com
+
+---
+
+MetaMemoryWorks — do EVERYTHING.
